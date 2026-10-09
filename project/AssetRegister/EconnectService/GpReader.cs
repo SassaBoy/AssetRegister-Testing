@@ -139,4 +139,58 @@ public class GpReader
 
         return prefix + (number + 1).ToString("D6");
     }
+
+    public Task<CreateResult> CreateDemoAssetAsync(NewAssetRequest request, string prefix)
+    {
+        var barcode = request.Barcode.Trim();
+        var description = request.Description.Trim();
+        var classCode = request.Class.Trim();
+
+        if (DemoAssets.Any(a =>
+            string.Equals(a.Barcode, barcode, StringComparison.OrdinalIgnoreCase)))
+        {
+            return Task.FromResult(new CreateResult
+            {
+                Success = false,
+                Error = "An asset with this barcode already exists."
+            });
+        }
+
+        var assetClass = DemoClasses.FirstOrDefault(c =>
+            string.Equals(c.Code, classCode, StringComparison.OrdinalIgnoreCase));
+
+        if (assetClass is null)
+        {
+            return Task.FromResult(new CreateResult
+            {
+                Success = false,
+                Error = "The selected asset class does not exist."
+            });
+        }
+
+        var highest = DemoAssets
+            .Where(a => a.AssetId.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+            .Select(a => int.TryParse(a.AssetId[prefix.Length..], out var n) ? n : 0)
+            .DefaultIfEmpty(0)
+            .Max();
+
+        var assetId = prefix + (highest + 1).ToString("D6");
+
+        DemoAssets.Add(new AssetDto
+        {
+            AssetId = assetId,
+            Barcode = barcode,
+            Description = description,
+            Class = assetClass.Code,
+            Custodian = request.Custodian.Trim(),
+            SerialNumber = request.SerialNumber.Trim()
+        });
+
+        return Task.FromResult(new CreateResult
+        {
+            Success = true,
+            GpAssetId = assetId
+        });
+    }
+
 }
