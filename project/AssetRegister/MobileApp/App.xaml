@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.App">
+
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!-- Brand colours -->
+            <Color x:Key="BrandNavy">#142B4A</Color>
+            <Color x:Key="BrandBlue">#246BCE</Color>
+            <Color x:Key="PageBackground">#F4F7FB</Color>
+            <Color x:Key="CardBackground">#FFFFFF</Color>
+            <Color x:Key="PrimaryText">#172B45</Color>
+            <Color x:Key="SecondaryText">#68788D</Color>
+            <Color x:Key="BorderColor">#E1E8F0</Color>
+            <Color x:Key="SuccessColor">#16845B</Color>
+
+            <!-- Consistent page background -->
+            <Style TargetType="ContentPage">
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource PageBackground}" />
+            </Style>
+
+            <!-- Default text -->
+            <Style TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{StaticResource PrimaryText}" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            <!-- Main action buttons -->
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource BrandBlue}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="HeightRequest" Value="52" />
+                <Setter Property="Padding" Value="18,12" />
+            </Style>
+
+            <!-- Form fields -->
+            <Style TargetType="Entry">
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource CardBackground}" />
+                <Setter Property="TextColor"
+                        Value="{StaticResource PrimaryText}" />
+                <Setter Property="PlaceholderColor"
+                        Value="{StaticResource SecondaryText}" />
+                <Setter Property="HeightRequest" Value="50" />
+            </Style>
+
+            <Style TargetType="Picker">
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource CardBackground}" />
+                <Setter Property="TextColor"
+                        Value="{StaticResource PrimaryText}" />
+                <Setter Property="HeightRequest" Value="50" />
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

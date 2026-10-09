@@ -1,0 +1,7 @@
+bin/
+obj/
+.vs/
+*.user
+# real keys and passwords never go into git
+EconnectService/appsettings.Local.json
+EconnectService/libs/*.dll

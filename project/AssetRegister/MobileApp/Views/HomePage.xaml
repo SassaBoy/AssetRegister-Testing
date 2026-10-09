@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.Views.HomePage"
+             Title="Asset Register">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Setup"
+                     Command="{Binding OpenSetupCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="22,24"
+                             Spacing="22">
+
+            <!-- Page heading -->
+            <VerticalStackLayout Spacing="5">
+                <Label Text="ASSET MANAGEMENT"
+                       FontSize="11"
+                       FontAttributes="Bold"
+                       CharacterSpacing="2"
+                       TextColor="{StaticResource BrandBlue}" />
+
+                <Label Text="Asset overview"
+                       FontSize="29"
+                       FontAttributes="Bold" />
+
+                <Label Text="Manage and track your registered assets."
+                       FontSize="14"
+                       TextColor="{StaticResource SecondaryText}" />
+            </VerticalStackLayout>
+
+            <!-- Welcome panel -->
+            <Border BackgroundColor="{StaticResource BrandNavy}"
+                    StrokeThickness="0"
+                    Padding="22"
+                    StrokeShape="RoundRectangle 20">
+
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="ASSET REGISTER"
+                           FontSize="11"
+                           CharacterSpacing="2"
+                           FontAttributes="Bold"
+                           TextColor="#BBD7FF" />
+
+                    <Label Text="Your assets,&#10;all in one place."
+                           FontSize="27"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           LineHeight="1.1" />
+
+                    <Label Text="Scan existing assets or register new ones. Your saved records stay on this device until they can sync."
+                           FontSize="14"
+                           TextColor="#E0EAF8"
+                           LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Offline and sync status -->
+            <Border BackgroundColor="{StaticResource CardBackground}"
+                    Stroke="{StaticResource BorderColor}"
+                    StrokeThickness="1"
+                    Padding="18"
+                    StrokeShape="RoundRectangle 16">
+
+                <Grid ColumnDefinitions="Auto,*"
+                      ColumnSpacing="14">
+
+                    <Border Grid.Column="0"
+                            BackgroundColor="#E5F5ED"
+                            WidthRequest="46"
+                            HeightRequest="46"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 13"
+                            VerticalOptions="Center">
+                        <Label Text="↻"
+                               FontSize="27"
+                               TextColor="{StaticResource SuccessColor}"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center" />
+                    </Border>
+
+                    <VerticalStackLayout Grid.Column="1"
+                                         Spacing="5"
+                                         VerticalOptions="Center">
+                        <Label Text="Sync status"
+                               FontSize="16"
+                               FontAttributes="Bold" />
+
+                        <Label Text="{Binding WaitingText}"
+                               FontSize="13"
+                               TextColor="{StaticResource SecondaryText}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Main actions -->
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Quick actions"
+                       FontSize="20"
+                       FontAttributes="Bold" />
+
+                <Label Text="Choose what you want to do."
+                       TextColor="{StaticResource SecondaryText}" />
+            </VerticalStackLayout>
+
+            <Border BackgroundColor="{StaticResource CardBackground}"
+                    Stroke="{StaticResource BorderColor}"
+                    StrokeThickness="1"
+                    Padding="16"
+                    StrokeShape="RoundRectangle 16">
+
+                <Grid ColumnDefinitions="*,Auto"
+                      ColumnSpacing="12">
+
+                    <VerticalStackLayout Grid.Column="0"
+                                         Spacing="5"
+                                         VerticalOptions="Center">
+                        <Label Text="Scan an asset"
+                               FontSize="17"
+                               FontAttributes="Bold" />
+
+                        <Label Text="Look up an asset using its barcode."
+                               FontSize="13"
+                               TextColor="{StaticResource SecondaryText}" />
+                    </VerticalStackLayout>
+
+                    <Button Grid.Column="1"
+                            Text="Scan"
+                            WidthRequest="90"
+                            VerticalOptions="Center"
+                            Command="{Binding ScanAssetCommand}" />
+                </Grid>
+            </Border>
+
+            <Border BackgroundColor="{StaticResource CardBackground}"
+                    Stroke="{StaticResource BorderColor}"
+                    StrokeThickness="1"
+                    Padding="16"
+                    StrokeShape="RoundRectangle 16">
+
+                <Grid ColumnDefinitions="*,Auto"
+                      ColumnSpacing="12">
+
+                    <VerticalStackLayout Grid.Column="0"
+                                         Spacing="5"
+                                         VerticalOptions="Center">
+                        <Label Text="Register an asset"
+                               FontSize="17"
+                               FontAttributes="Bold" />
+
+                        <Label Text="Enter details and save a new record."
+                               FontSize="13"
+                               TextColor="{StaticResource SecondaryText}" />
+                    </VerticalStackLayout>
+
+                    <Button Grid.Column="1"
+                            Text="Add new"
+                            WidthRequest="100"
+                            VerticalOptions="Center"
+                            Command="{Binding NewAssetCommand}" />
+                </Grid>
+            </Border>
+
+            <Border BackgroundColor="{StaticResource CardBackground}"
+                    Stroke="{StaticResource BorderColor}"
+                    StrokeThickness="1"
+                    Padding="16"
+                    StrokeShape="RoundRectangle 16">
+
+                <Grid ColumnDefinitions="*,Auto"
+                      ColumnSpacing="12">
+
+                    <VerticalStackLayout Grid.Column="0"
+                                         Spacing="5"
+                                         VerticalOptions="Center">
+                        <Label Text="Synchronisation"
+                               FontSize="17"
+                               FontAttributes="Bold" />
+
+                        <Label Text="Review pending records and sync status."
+                               FontSize="13"
+                               TextColor="{StaticResource SecondaryText}" />
+                    </VerticalStackLayout>
+
+                    <Button Grid.Column="1"
+                            Text="Open"
+                            WidthRequest="90"
+                            VerticalOptions="Center"
+                            Command="{Binding OpenSyncCommand}" />
+                </Grid>
+            </Border>
+
+            <!-- Footer -->
+            <Label Text="ASSET REGISTER  •  MOBILE"
+                   FontSize="10"
+                   CharacterSpacing="1.5"
+                   TextColor="{StaticResource SecondaryText}"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,4,0,10" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

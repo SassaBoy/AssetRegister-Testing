@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.Views.SyncPage"
+             Title="Sync">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="24" RowSpacing="12">
+        <Button Grid.Row="0" Text="Sync now" Command="{Binding SyncNowCommand}" />
+        <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsBusy}" />
+        <VerticalStackLayout Grid.Row="2" Spacing="4">
+            <Label Text="{Binding LastSyncText}" />
+            <Label Text="{Binding Message}" FontAttributes="Bold" />
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="3" ItemsSource="{Binding NewAssets}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout Padding="0,8">
+                        <Label Text="{Binding Description}" FontAttributes="Bold" />
+                        <Label Text="{Binding Barcode, StringFormat='Barcode: {0}'}" FontSize="12" />
+                        <Label Text="{Binding StatusText}" FontSize="12" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

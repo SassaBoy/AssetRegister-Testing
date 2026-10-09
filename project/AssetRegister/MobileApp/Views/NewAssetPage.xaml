@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileApp.Views.NewAssetPage"
+             Title="New asset">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12">
+            <Label Text="Barcode" />
+            <Entry Text="{Binding Barcode}" Placeholder="Scan or type the barcode" />
+            <Button Text="Scan barcode" Clicked="OnScanClicked" />
+
+            <Label Text="Description" />
+            <Entry Text="{Binding Description}" />
+
+            <Label Text="Class" />
+            <Picker ItemsSource="{Binding Classes}" ItemDisplayBinding="{Binding Display}" SelectedItem="{Binding SelectedClass}" Title="Choose a class" />
+
+            <Label Text="Custodian" />
+            <Entry Text="{Binding Custodian}" />
+
+            <Label Text="Serial number" />
+            <Entry Text="{Binding SerialNumber}" />
+
+            <Button Text="Save" Command="{Binding SaveCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

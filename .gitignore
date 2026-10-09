@@ -1,0 +1,8 @@
+**/bin/
+**/obj/
+**/.vs/
+**/*.user
+**/*.SdkResolver.*.Backup.tmp
+**/appsettings.Local.json
+**/appsettings.Development.json
+**/libs/*.dll
