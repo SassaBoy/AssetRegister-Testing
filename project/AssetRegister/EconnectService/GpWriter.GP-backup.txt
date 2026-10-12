@@ -1,0 +1,82 @@
+using System.Security;
+using Microsoft.Dynamics.GP.eConnect;
+
+namespace EconnectService;
+
+// Writes new assets into GP using eConnect. We never write to GP tables with SQL.
+public class GpWriter
+{
+    // Only one asset is created at a time, so two requests can never get the same Asset ID.
+    private static readonly SemaphoreSlim _lock = new(1, 1);
+
+    private readonly GpReader _reader;
+    private readonly string _prefix;
+
+    public GpWriter(GpReader reader, IConfiguration config)
+    {
+        _reader = reader;
+        _prefix = config["AssetIdPrefix"] ?? "APP";
+    }
+
+    public async Task<CreateResult> CreateAssetAsync(NewAssetRequest req)
+    {
+        await _lock.WaitAsync();
+        try
+        {
+            // 1. Duplicate check. If the barcode is already in GP, the record was sent before.
+            //    We just return the existing ID, so sending twice never creates a duplicate.
+            var existingId = await _reader.FindAssetIdByBarcodeAsync(req.Barcode);
+            if (existingId != null)
+                return new CreateResult { Success = true, GpAssetId = existingId };
+
+            // 2. Work out the next Asset ID.
+            var newId = await _reader.GetNextAssetIdAsync(_prefix);
+
+            // 3. Build the eConnect document and send it.
+            var xml = BuildXml(newId, req);
+            using (var econnect = new eConnectMethods())
+            {
+                // eConnect is old-style synchronous code, so run it on a background thread
+                await Task.Run(() => econnect.CreateEntity(_reader.ConnectionString, xml));
+            }
+
+            return new CreateResult { Success = true, GpAssetId = newId };
+        }
+        catch (Exception ex)
+        {
+            // Send the eConnect error text back so the phone can show it on the Sync screen.
+            return new CreateResult { Success = false, Error = ex.Message };
+        }
+        finally
+        {
+            _lock.Release();
+        }
+    }
+
+    // Builds the eConnect XML for the Fixed Assets "asset general information" node (taCreateAssetID).
+    //
+    // IMPORTANT - CHECK THIS PART IN YOUR eConnect INSTALL:
+    //  * the outer element name below (FAGeneralType)
+    //  * the field names for label, custodian and serial number
+    // Search the eConnect install folder / help file for "taCreateAssetID" to see the exact names.
+    private static string BuildXml(string assetId, NewAssetRequest req)
+    {
+        string E(string s) => SecurityElement.Escape(s ?? "") ?? "";   // escape & < > in the text
+
+        return $@"<?xml version=""1.0""?>
+<eConnect>
+  <FAGeneralType>
+    <taCreateAssetID>
+      <ASSETID>{E(assetId)}</ASSETID>
+      <ASSETIDSUF>0</ASSETIDSUF>
+      <ASSETDESC>{E(req.Description)}</ASSETDESC>
+      <ASSETCLASSID>{E(req.Class)}</ASSETCLASSID>
+      <ACQDATE>{DateTime.Today:yyyy-MM-dd}</ACQDATE>
+      <ASSETLABEL>{E(req.Barcode)}</ASSETLABEL>
+      <EMPLOYID>{E(req.Custodian)}</EMPLOYID>
+      <SERIALNO>{E(req.SerialNumber)}</SERIALNO>
+    </taCreateAssetID>
+  </FAGeneralType>
+</eConnect>";
+    }
+}
