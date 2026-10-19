@@ -1,27 +1,98 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApp.Views.NewAssetPage"
              Title="New asset">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="12">
-            <Label Text="Barcode" />
-            <Entry Text="{Binding Barcode}" Placeholder="Scan or type the barcode" />
-            <Button Text="Scan barcode" Clicked="OnScanClicked" />
+    <Grid RowDefinitions="*,Auto">
 
-            <Label Text="Description" />
-            <Entry Text="{Binding Description}" />
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="20,20,20,24" Spacing="16">
 
-            <Label Text="Class" />
-            <Picker ItemsSource="{Binding Classes}" ItemDisplayBinding="{Binding Display}" SelectedItem="{Binding SelectedClass}" Title="Choose a class" />
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Register an asset" StyleClass="H1" />
+                    <Label Text="Fields marked * are required. Saved on this phone first, then sent when you sync." StyleClass="Caption" />
+                </VerticalStackLayout>
 
-            <Label Text="Custodian" />
-            <Entry Text="{Binding Custodian}" />
+                <!-- Required -->
+                <Border StyleClass="Card">
+                    <VerticalStackLayout Spacing="16">
+                        <Label Text="REQUIRED" StyleClass="Caption" FontAttributes="Bold" />
 
-            <Label Text="Serial number" />
-            <Entry Text="{Binding SerialNumber}" />
+                        <VerticalStackLayout Spacing="6">
+                            <Label StyleClass="FieldLabel">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Barcode" />
+                                        <Span Text=" *" TextColor="{StaticResource Danger}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                <Border Grid.Column="0" StyleClass="Field">
+                                    <Entry Text="{Binding Barcode}" Placeholder="Scan or type the barcode" Keyboard="Text" ReturnType="Next" />
+                                </Border>
+                                <Button Grid.Column="1" Text="Scan" StyleClass="Secondary" Clicked="OnScanClicked" />
+                            </Grid>
+                        </VerticalStackLayout>
 
-            <Button Text="Save" Command="{Binding SaveCommand}" />
+                        <VerticalStackLayout Spacing="6">
+                            <Label StyleClass="FieldLabel">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Description" />
+                                        <Span Text=" *" TextColor="{StaticResource Danger}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Border StyleClass="Field">
+                                <Entry Text="{Binding Description}" Placeholder="e.g. Dell laptop 14 inch" Keyboard="Text" ReturnType="Next" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label StyleClass="FieldLabel">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Class" />
+                                        <Span Text=" *" TextColor="{StaticResource Danger}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Border StyleClass="Field">
+                                <Picker ItemsSource="{Binding Classes}" ItemDisplayBinding="{Binding Display}" SelectedItem="{Binding SelectedClass}" Title="Choose a class" />
+                            </Border>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Optional -->
+                <Border StyleClass="Card">
+                    <VerticalStackLayout Spacing="16">
+                        <Label Text="OPTIONAL" StyleClass="Caption" FontAttributes="Bold" />
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Custodian" StyleClass="FieldLabel" />
+                            <Border StyleClass="Field">
+                                <Entry Text="{Binding Custodian}" Placeholder="Person responsible for the asset" Keyboard="Text" ReturnType="Next" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Serial number" StyleClass="FieldLabel" />
+                            <Border StyleClass="Field">
+                                <Entry Text="{Binding SerialNumber}" Placeholder="Manufacturer serial number" Keyboard="Text" ReturnType="Done" />
+                            </Border>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="1" Spacing="0" BackgroundColor="{StaticResource Surface}">
+            <BoxView HeightRequest="1" Color="{StaticResource Line}" />
+            <Button Text="Save asset" Command="{Binding SaveCommand}" Margin="20,12,20,16" />
         </VerticalStackLayout>
-    </ScrollView>
+
+    </Grid>
 </ContentPage>

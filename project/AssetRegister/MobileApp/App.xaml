@@ -1,63 +1,133 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileApp.App">
-
+             x:Class="MobileApp.App"
+             UserAppTheme="Light">
     <Application.Resources>
         <ResourceDictionary>
 
-            <!-- Brand colours -->
-            <Color x:Key="BrandNavy">#142B4A</Color>
-            <Color x:Key="BrandBlue">#246BCE</Color>
-            <Color x:Key="PageBackground">#F4F7FB</Color>
-            <Color x:Key="CardBackground">#FFFFFF</Color>
-            <Color x:Key="PrimaryText">#172B45</Color>
-            <Color x:Key="SecondaryText">#68788D</Color>
-            <Color x:Key="BorderColor">#E1E8F0</Color>
-            <Color x:Key="SuccessColor">#16845B</Color>
+            <!-- ===== Colour palette ===== -->
+            <Color x:Key="Navy">#0B1F3A</Color>
+            <Color x:Key="NavyMid">#16335C</Color>
+            <Color x:Key="Accent">#2563EB</Color>
+            <Color x:Key="AccentSoft">#E8F0FE</Color>
+            <Color x:Key="PageBg">#F4F6FA</Color>
+            <Color x:Key="Surface">#FFFFFF</Color>
+            <Color x:Key="Line">#E2E8F0</Color>
+            <Color x:Key="TextPrimary">#0F172A</Color>
+            <Color x:Key="TextMuted">#64748B</Color>
+            <Color x:Key="Success">#15803D</Color>
+            <Color x:Key="SuccessSoft">#E3F5E9</Color>
+            <Color x:Key="Warning">#B45309</Color>
+            <Color x:Key="WarningSoft">#FEF3C7</Color>
+            <Color x:Key="Amber">#F59E0B</Color>
+            <Color x:Key="Danger">#DC2626</Color>
+            <Color x:Key="DangerSoft">#FDECEC</Color>
 
-            <!-- Consistent page background -->
-            <Style TargetType="ContentPage">
-                <Setter Property="BackgroundColor"
-                        Value="{StaticResource PageBackground}" />
+            <!-- ===== Pages ===== -->
+            <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+                <Setter Property="BackgroundColor" Value="{StaticResource PageBg}" />
             </Style>
 
-            <!-- Default text -->
+            <!-- ===== Labels ===== -->
             <Style TargetType="Label">
-                <Setter Property="TextColor"
-                        Value="{StaticResource PrimaryText}" />
-                <Setter Property="FontSize" Value="14" />
-            </Style>
-
-            <!-- Main action buttons -->
-            <Style TargetType="Button">
-                <Setter Property="BackgroundColor"
-                        Value="{StaticResource BrandBlue}" />
-                <Setter Property="TextColor" Value="White" />
+                <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
                 <Setter Property="FontSize" Value="15" />
+            </Style>
+            <Style TargetType="Label" Class="H1">
+                <Setter Property="FontSize" Value="26" />
                 <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="CornerRadius" Value="12" />
+            </Style>
+            <Style TargetType="Label" Class="H2">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+            <Style TargetType="Label" Class="Caption">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="TextColor" Value="{StaticResource TextMuted}" />
+            </Style>
+            <Style TargetType="Label" Class="FieldLabel">
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            </Style>
+
+            <!-- ===== Cards and fields ===== -->
+            <Style TargetType="Border" Class="Card">
+                <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
+                <Setter Property="Stroke" Value="{StaticResource Line}" />
+                <Setter Property="StrokeThickness" Value="1" />
+                <Setter Property="Padding" Value="16" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+            </Style>
+            <Style TargetType="Border" Class="Field">
+                <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
+                <Setter Property="Stroke" Value="{StaticResource Line}" />
+                <Setter Property="StrokeThickness" Value="1" />
+                <Setter Property="Padding" Value="12,0" />
                 <Setter Property="HeightRequest" Value="52" />
-                <Setter Property="Padding" Value="18,12" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 12" />
             </Style>
 
-            <!-- Form fields -->
             <Style TargetType="Entry">
-                <Setter Property="BackgroundColor"
-                        Value="{StaticResource CardBackground}" />
-                <Setter Property="TextColor"
-                        Value="{StaticResource PrimaryText}" />
-                <Setter Property="PlaceholderColor"
-                        Value="{StaticResource SecondaryText}" />
-                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+                <Setter Property="PlaceholderColor" Value="#94A3B8" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+            <Style TargetType="Picker">
+                <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+                <Setter Property="TitleColor" Value="#94A3B8" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+            <Style TargetType="Switch">
+                <Setter Property="OnColor" Value="{StaticResource Accent}" />
+            </Style>
+            <Style TargetType="ActivityIndicator">
+                <Setter Property="Color" Value="{StaticResource Accent}" />
             </Style>
 
-            <Style TargetType="Picker">
-                <Setter Property="BackgroundColor"
-                        Value="{StaticResource CardBackground}" />
-                <Setter Property="TextColor"
-                        Value="{StaticResource PrimaryText}" />
-                <Setter Property="HeightRequest" Value="50" />
+            <!-- ===== Buttons ===== -->
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="14" />
+                <Setter Property="HeightRequest" Value="52" />
+                <Setter Property="Padding" Value="20,0" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#CBD5E1" />
+                                    <Setter Property="TextColor" Value="#64748B" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style TargetType="Button" Class="Secondary">
+                <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
+                <Setter Property="TextColor" Value="{StaticResource Navy}" />
+                <Setter Property="BorderColor" Value="{StaticResource Line}" />
+                <Setter Property="BorderWidth" Value="1" />
+            </Style>
+            <Style TargetType="Button" Class="OnDark">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BorderColor" Value="#80FFFFFF" />
+                <Setter Property="BorderWidth" Value="1" />
+            </Style>
+            <Style TargetType="Button" Class="Light">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="TextColor" Value="{StaticResource Navy}" />
             </Style>
 
         </ResourceDictionary>

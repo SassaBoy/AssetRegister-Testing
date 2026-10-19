@@ -1,17 +1,36 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
              x:Class="MobileApp.Views.ScannerPage"
-             Title="Scan">
+             Title="Scan"
+             BackgroundColor="Black">
 
-    <Grid RowDefinitions="*,Auto" Padding="0">
-        <zxing:CameraBarcodeReaderView x:Name="BarcodeReader" Grid.Row="0"
+    <Grid>
+        <zxing:CameraBarcodeReaderView x:Name="BarcodeReader"
                                        IsDetecting="True"
                                        BarcodesDetected="OnBarcodesDetected" />
 
-        <HorizontalStackLayout Grid.Row="1" Padding="16" Spacing="12" HorizontalOptions="Center">
-            <Button Text="Type code" Clicked="OnTypeCodeClicked" />
-            <Button Text="Cancel" Clicked="OnCancelClicked" />
-        </HorizontalStackLayout>
+        <!-- Scan frame -->
+        <Border InputTransparent="True" WidthRequest="290" HeightRequest="220"
+                HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,40"
+                BackgroundColor="Transparent" Stroke="White" StrokeThickness="3"
+                StrokeShape="RoundRectangle 24" />
+
+        <!-- Instructions -->
+        <Border VerticalOptions="Start" HorizontalOptions="Center" Margin="20,56,20,0"
+                BackgroundColor="#99000000" StrokeThickness="0" Padding="18,10"
+                StrokeShape="RoundRectangle 20" InputTransparent="True">
+            <Label Text="Align the barcode inside the frame" TextColor="White" FontSize="14" FontAttributes="Bold"
+                   HorizontalTextAlignment="Center" />
+        </Border>
+
+        <!-- Actions -->
+        <Border VerticalOptions="End" BackgroundColor="{StaticResource Navy}" StrokeThickness="0"
+                Padding="20,20,20,28" StrokeShape="RoundRectangle 24,24,0,0">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Grid.Column="0" Text="Type code" StyleClass="OnDark" Clicked="OnTypeCodeClicked" />
+                <Button Grid.Column="1" Text="Cancel" StyleClass="Light" Clicked="OnCancelClicked" />
+            </Grid>
+        </Border>
     </Grid>
 </ContentPage>

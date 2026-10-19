@@ -1,24 +1,72 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApp.Views.ScanAssetPage"
              Title="Scan asset">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="12">
-            <Button Text="Scan barcode" Clicked="OnScanClicked" />
-            <Button Text="Type code" Clicked="OnTypeCodeClicked" />
+        <VerticalStackLayout Padding="20,20,20,28" Spacing="16">
 
-            <Label Text="{Binding Message}" FontSize="16" />
+            <!-- Scan prompt -->
+            <Border BackgroundColor="{StaticResource Navy}" StrokeThickness="0" Padding="20" StrokeShape="RoundRectangle 20">
+                <VerticalStackLayout Spacing="14">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Find an asset" FontSize="22" FontAttributes="Bold" TextColor="White" />
+                        <Label Text="Point the camera at the asset label, or type the code if the label is damaged."
+                               FontSize="13" TextColor="#9DB2D4" />
+                    </VerticalStackLayout>
+                    <Button Text="Scan barcode" StyleClass="Light" Clicked="OnScanClicked" />
+                    <Button Text="Type code manually" StyleClass="OnDark" Clicked="OnTypeCodeClicked" />
+                </VerticalStackLayout>
+            </Border>
 
-            <VerticalStackLayout IsVisible="{Binding HasResult}" Spacing="6">
-                <Label Text="{Binding AssetId, StringFormat='Asset ID: {0}'}" />
-                <Label Text="{Binding Description, StringFormat='Description: {0}'}" />
-                <Label Text="{Binding AssetClass, StringFormat='Class: {0}'}" />
-                <Label Text="{Binding Custodian, StringFormat='Custodian: {0}'}" />
-                <Label Text="{Binding SerialNumber, StringFormat='Serial number: {0}'}" />
-            </VerticalStackLayout>
+            <!-- Lookup message -->
+            <Border StyleClass="Card">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="RESULT" StyleClass="Caption" FontAttributes="Bold" />
+                    <Label Text="{Binding Message}" FontSize="16" FontAttributes="Bold" />
+                    <Button Text="Register as new asset" Command="{Binding RegisterAsNewCommand}" IsVisible="{Binding CanRegister}" />
+                </VerticalStackLayout>
+            </Border>
 
-            <Button Text="Register as new asset" Command="{Binding RegisterAsNewCommand}" IsVisible="{Binding CanRegister}" />
+            <!-- Asset details -->
+            <Border StyleClass="Card" IsVisible="{Binding HasResult}">
+                <VerticalStackLayout Spacing="12">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="ASSET ID" StyleClass="Caption" FontAttributes="Bold" />
+                        <Label Text="{Binding AssetId}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Accent}" />
+                    </VerticalStackLayout>
+
+                    <BoxView HeightRequest="1" Color="{StaticResource Line}" />
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Description" StyleClass="Caption" />
+                        <Label Text="{Binding Description}" FontSize="16" FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label Text="Class" StyleClass="Caption" />
+                            <Label Text="{Binding AssetClass}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Barcode" StyleClass="Caption" />
+                            <Label Text="{Binding ScannedCode}" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label Text="Custodian" StyleClass="Caption" />
+                            <Label Text="{Binding Custodian}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Serial number" StyleClass="Caption" />
+                            <Label Text="{Binding SerialNumber}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

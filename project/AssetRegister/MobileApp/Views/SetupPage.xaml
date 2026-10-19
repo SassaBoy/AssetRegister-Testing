@@ -1,28 +1,104 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileApp.Views.SetupPage"
              Title="Setup">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="12">
-            <Label Text="Service address" />
-            <Entry Text="{Binding ServiceAddress}" Placeholder="http://192.168.1.10:5080" Keyboard="Url" />
+    <Grid RowDefinitions="*,Auto">
 
-            <Label Text="Access key" />
-            <Entry Text="{Binding AccessKey}" IsPassword="True" />
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="20,20,20,24" Spacing="16">
 
-            <Label Text="Your name" />
-            <Entry Text="{Binding UserName}" />
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Connect to your service" StyleClass="H1" />
+                    <Label Text="Fields marked * are required." StyleClass="Caption" />
+                </VerticalStackLayout>
 
-            <HorizontalStackLayout Spacing="10">
-                <Switch IsToggled="{Binding UseFakeService}" />
-                <Label Text="Use fake service (for testing without GP)" VerticalOptions="Center" />
-            </HorizontalStackLayout>
+                <Border StyleClass="Card">
+                    <VerticalStackLayout Spacing="16">
 
-            <Button Text="Test connection" Command="{Binding TestConnectionCommand}" />
-            <Label Text="{Binding TestResult}" FontAttributes="Bold" />
+                        <VerticalStackLayout Spacing="6">
+                            <Label StyleClass="FieldLabel">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Service address" />
+                                        <Span Text=" *" TextColor="{StaticResource Danger}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Border StyleClass="Field">
+                                <Entry Text="{Binding ServiceAddress}" Placeholder="http://192.168.1.10:5080" Keyboard="Url" ReturnType="Next" />
+                            </Border>
+                        </VerticalStackLayout>
 
-            <Button Text="Save" Command="{Binding SaveCommand}" />
+                        <VerticalStackLayout Spacing="6">
+                            <Label StyleClass="FieldLabel">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Access key" />
+                                        <Span Text=" *" TextColor="{StaticResource Danger}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Border StyleClass="Field">
+                                <Entry Text="{Binding AccessKey}" IsPassword="True" Placeholder="Enter your access key" ReturnType="Next" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label StyleClass="FieldLabel">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Your name" />
+                                        <Span Text=" *" TextColor="{StaticResource Danger}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Border StyleClass="Field">
+                                <Entry Text="{Binding UserName}" Placeholder="Shown as the creator of new assets" ReturnType="Done" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border StyleClass="Card">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                            <Label Text="Use fake service" FontAttributes="Bold" />
+                            <Label Text="For testing without GP" StyleClass="Caption" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="1" IsToggled="{Binding UseFakeService}" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <Button Text="Test connection" StyleClass="Secondary" Command="{Binding TestConnectionCommand}" />
+
+                <!-- Result of the connection test. Hidden until there is something to show. -->
+                <Border StyleClass="Card" BackgroundColor="{StaticResource AccentSoft}" Stroke="{StaticResource AccentSoft}">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding TestResult}" Value="">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <ActivityIndicator Grid.Column="0" IsRunning="True" IsVisible="False" WidthRequest="22" HeightRequest="22" VerticalOptions="Center">
+                            <ActivityIndicator.Triggers>
+                                <DataTrigger TargetType="ActivityIndicator" Binding="{Binding TestResult}" Value="Testing...">
+                                    <Setter Property="IsVisible" Value="True" />
+                                </DataTrigger>
+                            </ActivityIndicator.Triggers>
+                        </ActivityIndicator>
+                        <Label Grid.Column="1" Text="{Binding TestResult}" FontAttributes="Bold" TextColor="{StaticResource Navy}" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="1" Spacing="0" BackgroundColor="{StaticResource Surface}">
+            <BoxView HeightRequest="1" Color="{StaticResource Line}" />
+            <Button Text="Save" Command="{Binding SaveCommand}" Margin="20,12,20,16" />
         </VerticalStackLayout>
-    </ScrollView>
+
+    </Grid>
 </ContentPage>
